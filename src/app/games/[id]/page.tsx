@@ -1,3 +1,9 @@
+"use client";
+
+import games, { gamesGroupedBySeason } from "@/data/games";
+console.log(games, gamesGroupedBySeason);
 export default function Page({ params }: { params: { id: string } }) {
-  return <div>My Post: {params.id}</div>;
+  // console.log(data);
+
+  return <div>Game: {params.id}!!!!</div>;
 }

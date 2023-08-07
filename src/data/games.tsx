@@ -1,6 +1,10 @@
+import groupBy from "lodash/groupBy";
+import keyBy from "lodash/keyBy";
+
 const games = [
   {
-    season: "7",
+    id: 0,
+    season: 7,
     teamName: "Supersonics WED",
     videoUrls: [
       {
@@ -10,7 +14,8 @@ const games = [
     ],
   },
   {
-    season: "7",
+    id: 1,
+    season: 7,
     teamName: "Harjit N Friends Rematch",
     videoUrls: [
       {
@@ -20,7 +25,8 @@ const games = [
     ],
   },
   {
-    season: "7",
+    id: 2,
+    season: 7,
     teamName: "Indy CORNER THREE",
     videoUrls: [
       {
@@ -30,15 +36,23 @@ const games = [
     ],
   },
   {
-    season: "7",
+    id: 3,
+    season: 7,
     teamName: "Indy Durant Durant",
     videoUrls: [
-      { href: "https://www.youtube.com/watch?v=QEefnzI9N7Y", name: "Pt.2" },
-      { href: "https://www.youtube.com/watch?v=QEefnzI9N7Y", name: "Pt.2" },
+      {
+        href: "https://www.youtube.com/watch?v=QEefnzI9N7Y",
+        name: "Pt.2",
+      },
+      {
+        href: "https://www.youtube.com/watch?v=QEefnzI9N7Y",
+        name: "Pt.2",
+      },
     ],
   },
   {
-    season: "7",
+    id: 4,
+    season: 7,
     teamName: "Double Stacks",
     videoUrls: [
       {
@@ -48,7 +62,8 @@ const games = [
     ],
   },
   {
-    season: "7",
+    id: 5,
+    season: 7,
     teamName: "Harjit N Friends",
     videoUrls: [
       {
@@ -58,7 +73,8 @@ const games = [
     ],
   },
   {
-    season: "6",
+    id: 6,
+    season: 6,
     teamName: "Dave's House",
     videoUrls: [
       {
@@ -68,21 +84,30 @@ const games = [
     ],
   },
   {
-    season: "6",
+    id: 7,
+    season: 6,
     teamName: "Sleepy Joes",
     videoUrls: [
-      { href: "https://www.youtube.com/watch?v=oYk-ItiAUO4", name: "Link" },
+      {
+        href: "https://www.youtube.com/watch?v=oYk-ItiAUO4",
+        name: "Link",
+      },
     ],
   },
   {
-    season: "6",
+    id: 8,
+    season: 6,
     teamName: "Ring Chasers",
     videoUrls: [
-      { href: "https://www.youtube.com/watch?v=80IPIlJ4pNk", name: "Link" },
+      {
+        href: "https://www.youtube.com/watch?v=80IPIlJ4pNk",
+        name: "Link",
+      },
     ],
   },
   {
-    season: "6",
+    id: 9,
+    season: 6,
     teamName: "OnniHeads",
     videoUrls: [
       {
@@ -92,7 +117,8 @@ const games = [
     ],
   },
   {
-    season: "6",
+    id: 10,
+    season: 6,
     teamName: "Double Stacks",
     videoUrls: [
       {
@@ -102,7 +128,8 @@ const games = [
     ],
   },
   {
-    season: "5",
+    id: 11,
+    season: 5,
     teamName: "SKYPG",
     videoUrls: [
       {
@@ -112,7 +139,8 @@ const games = [
     ],
   },
   {
-    season: "5",
+    id: 12,
+    season: 5,
     teamName: "Still Below the Rim",
     videoUrls: [
       {
@@ -122,7 +150,8 @@ const games = [
     ],
   },
   {
-    season: "5",
+    id: 13,
+    season: 5,
     teamName: "Indy Shish Kabob",
     videoUrls: [
       {
@@ -132,7 +161,8 @@ const games = [
     ],
   },
   {
-    season: "5",
+    id: 14,
+    season: 5,
     teamName: "Supersonics (WED)",
     videoUrls: [
       {
@@ -142,7 +172,8 @@ const games = [
     ],
   },
   {
-    season: "5",
+    id: 15,
+    season: 5,
     teamName: "The Double Stacks",
     videoUrls: [
       {
@@ -152,7 +183,8 @@ const games = [
     ],
   },
   {
-    season: "4",
+    id: 16,
+    season: 4,
     teamName: "Unknown",
     videoUrls: [
       {
@@ -162,7 +194,8 @@ const games = [
     ],
   },
   {
-    season: "4",
+    id: 17,
+    season: 4,
     teamName: "Unknown",
     videoUrls: [
       {
@@ -172,21 +205,30 @@ const games = [
     ],
   },
   {
-    season: "4",
+    id: 18,
+    season: 4,
     teamName: "Unknown",
     videoUrls: [
-      { href: "https://www.youtube.com/watch?v=oqURgacutUs", name: "Link" },
+      {
+        href: "https://www.youtube.com/watch?v=oqURgacutUs",
+        name: "Link",
+      },
     ],
   },
   {
-    season: "5",
+    id: 19,
+    season: 5,
     teamName: "99 Problems (But A Swish Ain't One)",
     videoUrls: [
-      { href: "https://www.youtube.com/watch?v=nf0azJKpWbY", name: "Link" },
+      {
+        href: "https://www.youtube.com/watch?v=nf0azJKpWbY",
+        name: "Link",
+      },
     ],
   },
   {
-    season: "5",
+    id: 20,
+    season: 5,
     teamName: "Checks Over Stripes",
     videoUrls: [
       {
@@ -196,7 +238,8 @@ const games = [
     ],
   },
   {
-    season: "4",
+    id: 21,
+    season: 4,
     teamName: "Ben Simmons Jumpshot Full",
     videoUrls: [
       {
@@ -206,7 +249,8 @@ const games = [
     ],
   },
   {
-    season: "3",
+    id: 22,
+    season: 3,
     teamName: "Brick for Vick",
     videoUrls: [
       {
@@ -220,15 +264,23 @@ const games = [
     ],
   },
   {
-    season: "3",
+    id: 23,
+    season: 3,
     teamName: "Indy Providence Steamrollers",
     videoUrls: [
-      { href: "https://www.youtube.com/watch?v=ucp4RK0pxok", name: "Part 2" },
-      { href: "https://www.youtube.com/watch?v=ucp4RK0pxok", name: "Part 2" },
+      {
+        href: "https://www.youtube.com/watch?v=ucp4RK0pxok",
+        name: "Part 2",
+      },
+      {
+        href: "https://www.youtube.com/watch?v=ucp4RK0pxok",
+        name: "Part 2",
+      },
     ],
   },
   {
-    season: "3",
+    id: 24,
+    season: 3,
     teamName: "Atomic Supermen",
     videoUrls: [
       {
@@ -242,7 +294,8 @@ const games = [
     ],
   },
   {
-    season: "4",
+    id: 25,
+    season: 4,
     teamName: "Hoops I Did It Again",
     videoUrls: [
       {
@@ -252,14 +305,19 @@ const games = [
     ],
   },
   {
-    season: "3",
+    id: 26,
+    season: 3,
     teamName: "Korean Fish",
     videoUrls: [
-      { href: "https://www.youtube.com/watch?v=RE9zD0uxUe4", name: "Link" },
+      {
+        href: "https://www.youtube.com/watch?v=RE9zD0uxUe4",
+        name: "Link",
+      },
     ],
   },
   {
-    season: "4",
+    id: 27,
+    season: 4,
     teamName: "Old Guys",
     videoUrls: [
       {
@@ -269,7 +327,8 @@ const games = [
     ],
   },
   {
-    season: "4",
+    id: 28,
+    season: 4,
     teamName: "Vamos Locos",
     videoUrls: [
       {
@@ -279,7 +338,8 @@ const games = [
     ],
   },
   {
-    season: "1",
+    id: 29,
+    season: 1,
     teamName: "Unknown",
     videoUrls: [
       {
@@ -293,7 +353,8 @@ const games = [
     ],
   },
   {
-    season: "1",
+    id: 30,
+    season: 1,
     teamName: "Unknown",
     videoUrls: [
       {
@@ -303,7 +364,8 @@ const games = [
     ],
   },
   {
-    season: "1",
+    id: 31,
+    season: 1,
     teamName: "Unknown",
     videoUrls: [
       {
@@ -313,7 +375,8 @@ const games = [
     ],
   },
   {
-    season: "1",
+    id: 32,
+    season: 1,
     teamName: "Unknown",
     videoUrls: [
       {
@@ -327,15 +390,23 @@ const games = [
     ],
   },
   {
-    season: "1",
+    id: 33,
+    season: 1,
     teamName: "Unknown (Raj's Phone)",
     videoUrls: [
-      { href: "https://www.youtube.com/watch?v=1nun8ihCdwU", name: "Link" },
-      { href: "https://www.youtube.com/watch?v=1nun8ihCdwU", name: "Link" },
+      {
+        href: "https://www.youtube.com/watch?v=1nun8ihCdwU",
+        name: "Link",
+      },
+      {
+        href: "https://www.youtube.com/watch?v=1nun8ihCdwU",
+        name: "Link",
+      },
     ],
   },
   {
-    season: "1",
+    id: 34,
+    season: 1,
     teamName: "Unknown",
     videoUrls: [
       {
@@ -349,7 +420,8 @@ const games = [
     ],
   },
   {
-    season: "1",
+    id: 35,
+    season: 1,
     teamName: "Korean Fish",
     videoUrls: [
       {
@@ -363,5 +435,8 @@ const games = [
     ],
   },
 ];
+
+export const gamesGroupedBySeason = groupBy(games, (game) => game.season);
+export const gamesById = keyBy(games, (game) => game.id);
 
 export default games;
