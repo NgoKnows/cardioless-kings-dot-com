@@ -8,7 +8,7 @@ const games = [
     teamName: "Supersonics WED",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=r3zMMwHYY0g&t=3266s",
+        href: "https://www.youtube.com/watch?v=r3zMMwHYY0g",
         name: "Link",
       },
     ],
@@ -19,7 +19,7 @@ const games = [
     teamName: "Harjit N Friends Rematch",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=sQgtMvmkUvk&t=1947s",
+        href: "https://www.youtube.com/watch?v=sQgtMvmkUvk",
         name: "Link",
       },
     ],
@@ -30,7 +30,7 @@ const games = [
     teamName: "Indy CORNER THREE",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=T-QxO1_FFUc&t=2878s",
+        href: "https://www.youtube.com/watch?v=T-QxO1_FFUc",
         name: "Link",
       },
     ],
@@ -45,8 +45,8 @@ const games = [
         name: "Pt.2",
       },
       {
-        href: "https://www.youtube.com/watch?v=QEefnzI9N7Y",
-        name: "Pt.2",
+        href: "https://www.youtube.com/watch?v=n4dLsA7aQgo",
+        name: "Pt.1",
       },
     ],
   },
@@ -56,7 +56,7 @@ const games = [
     teamName: "Double Stacks",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=_aldj4w-zek&t=1416s",
+        href: "https://www.youtube.com/watch?v=_aldj4w-zek",
         name: "Link",
       },
     ],
@@ -67,7 +67,7 @@ const games = [
     teamName: "Harjit N Friends",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=xjIdVnnxEgA&t=966s",
+        href: "https://www.youtube.com/watch?v=xjIdVnnxEgA",
         name: "Link",
       },
     ],
@@ -78,7 +78,7 @@ const games = [
     teamName: "Dave's House",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=HkFHEgA9tBA&t=3054s",
+        href: "https://www.youtube.com/watch?v=HkFHEgA9tBA",
         name: "Link",
       },
     ],
@@ -111,7 +111,7 @@ const games = [
     teamName: "OnniHeads",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=GUacmmr4uDA&t=1162s",
+        href: "https://www.youtube.com/watch?v=GUacmmr4uDA",
         name: "Link",
       },
     ],
@@ -122,7 +122,7 @@ const games = [
     teamName: "Double Stacks",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=3CKte-uLKb0&t=2902s",
+        href: "https://www.youtube.com/watch?v=3CKte-uLKb0",
         name: "Link",
       },
     ],
@@ -133,7 +133,7 @@ const games = [
     teamName: "SKYPG",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=cipJrkHAcGc&t=2950s",
+        href: "https://www.youtube.com/watch?v=cipJrkHAcGc",
         name: "Link",
       },
     ],
@@ -144,7 +144,7 @@ const games = [
     teamName: "Still Below the Rim",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=s3-Jodvwgs0&t=465s",
+        href: "https://www.youtube.com/watch?v=s3-Jodvwgs0",
         name: "Link",
       },
     ],
@@ -155,7 +155,7 @@ const games = [
     teamName: "Indy Shish Kabob",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=Bw3C4elp99I&t=3002s",
+        href: "https://www.youtube.com/watch?v=Bw3C4elp99I",
         name: "Link",
       },
     ],
@@ -166,7 +166,7 @@ const games = [
     teamName: "Supersonics (WED)",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=UySWZiVoVu4&t=3110s",
+        href: "https://www.youtube.com/watch?v=UySWZiVoVu4",
         name: "Link",
       },
     ],
@@ -177,7 +177,7 @@ const games = [
     teamName: "The Double Stacks",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=5qb64CUOwVU&t=3877s",
+        href: "https://www.youtube.com/watch?v=5qb64CUOwVU",
         name: "Link",
       },
     ],
@@ -188,7 +188,7 @@ const games = [
     teamName: "Unknown",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=Ill0d6VofLk&t=33s",
+        href: "https://www.youtube.com/watch?v=Ill0d6VofLk",
         name: "Link",
       },
     ],
@@ -199,7 +199,7 @@ const games = [
     teamName: "Unknown",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=k7H7NZa6Rx8&t=703s",
+        href: "https://www.youtube.com/watch?v=k7H7NZa6Rx8",
         name: "Link",
       },
     ],
@@ -232,7 +232,7 @@ const games = [
     teamName: "Checks Over Stripes",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=5PKGoONJvZ8&t=1842s",
+        href: "https://www.youtube.com/watch?v=5PKGoONJvZ8",
         name: "Link",
       },
     ],
@@ -243,7 +243,7 @@ const games = [
     teamName: "Ben Simmons Jumpshot Full",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=v0ILnMNIuF0&t=434s",
+        href: "https://www.youtube.com/watch?v=v0ILnMNIuF0",
         name: "Link",
       },
     ],
@@ -254,12 +254,12 @@ const games = [
     teamName: "Brick for Vick",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=2SD33eOuRHw&t=183s",
+        href: "https://www.youtube.com/watch?v=2SD33eOuRHw",
         name: "Part 2",
       },
       {
-        href: "https://www.youtube.com/watch?v=2SD33eOuRHw&t=183s",
-        name: "Part 2",
+        href: "https://www.youtube.com/watch?v=UmkQhu1YFkw",
+        name: "Part 1",
       },
     ],
   },
@@ -273,8 +273,8 @@ const games = [
         name: "Part 2",
       },
       {
-        href: "https://www.youtube.com/watch?v=ucp4RK0pxok",
-        name: "Part 2",
+        href: "https://www.youtube.com/watch?v=hy4c9nmTmcU",
+        name: "Part 1",
       },
     ],
   },
@@ -284,12 +284,12 @@ const games = [
     teamName: "Atomic Supermen",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=orgg6OWu8XA&t=2s",
+        href: "https://www.youtube.com/watch?v=orgg6OWu8XA",
         name: "Part 2",
       },
       {
-        href: "https://www.youtube.com/watch?v=orgg6OWu8XA&t=2s",
-        name: "Part 2",
+        href: "https://www.youtube.com/watch?v=I0zSnzIBNwQ",
+        name: "Part 1",
       },
     ],
   },
@@ -299,7 +299,7 @@ const games = [
     teamName: "Hoops I Did It Again",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=E0w7M9fdanE&t=615s",
+        href: "https://www.youtube.com/watch?v=E0w7M9fdanE",
         name: "Link",
       },
     ],
@@ -321,7 +321,7 @@ const games = [
     teamName: "Old Guys",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=QGIk_sMzsoA&t=2873s",
+        href: "https://www.youtube.com/watch?v=QGIk_sMzsoA",
         name: "Link",
       },
     ],
@@ -332,7 +332,7 @@ const games = [
     teamName: "Vamos Locos",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=44OplldCg_A&t=2438s",
+        href: "https://www.youtube.com/watch?v=44OplldCg_A",
         name: "Link",
       },
     ],
@@ -343,12 +343,12 @@ const games = [
     teamName: "Unknown",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=XvhKaXdReBo&t=3s",
+        href: "https://www.youtube.com/watch?v=XvhKaXdReBo",
         name: "(Raj's Phone)",
       },
       {
-        href: "https://www.youtube.com/watch?v=XvhKaXdReBo&t=3s",
-        name: "(Raj's Phone)",
+        href: "https://www.youtube.com/watch?v=ZWO6TMx9E00",
+        name: "(Mike's Phone)",
       },
     ],
   },
@@ -358,7 +358,7 @@ const games = [
     teamName: "Unknown",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=1QDcuwOcrzY&t=1936s",
+        href: "https://www.youtube.com/watch?v=1QDcuwOcrzY",
         name: "Link",
       },
     ],
@@ -369,7 +369,7 @@ const games = [
     teamName: "Unknown",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=QrNxU53j5Oc&t=2540s",
+        href: "https://www.youtube.com/watch?v=QrNxU53j5Oc",
         name: "Link",
       },
     ],
@@ -380,12 +380,12 @@ const games = [
     teamName: "Unknown",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=6OX_r9ZyY2Q&t=203s",
+        href: "https://www.youtube.com/watch?v=6OX_r9ZyY2Q",
         name: "(Mike's Phone)",
       },
       {
-        href: "https://www.youtube.com/watch?v=6OX_r9ZyY2Q&t=203s",
-        name: "(Mike's Phone)",
+        href: "https://www.youtube.com/watch?v=lYMQviczGlE",
+        name: "(Raj's Phone)",
       },
     ],
   },
@@ -399,7 +399,7 @@ const games = [
         name: "Link",
       },
       {
-        href: "https://www.youtube.com/watch?v=1nun8ihCdwU",
+        href: "https://www.youtube.com/watch?v=-FMIOqAs0sA",
         name: "Link",
       },
     ],
@@ -414,8 +414,8 @@ const games = [
         name: "(Raj's Phone)",
       },
       {
-        href: "https://www.youtube.com/watch?v=s0Ol9rzaneA",
-        name: "(Raj's Phone)",
+        href: "https://www.youtube.com/watch?v=5iUNwZGHhrE",
+        name: " (Mike's Phone)",
       },
     ],
   },
@@ -425,12 +425,12 @@ const games = [
     teamName: "Korean Fish",
     videoUrls: [
       {
-        href: "https://www.youtube.com/watch?v=N5k9zkQPZdM&t=10s",
+        href: "https://www.youtube.com/watch?v=N5k9zkQPZdM",
         name: "Part 2",
       },
       {
-        href: "https://www.youtube.com/watch?v=N5k9zkQPZdM&t=10s",
-        name: "Part 2",
+        href: "https://www.youtube.com/watch?v=03qa9ep20CQ",
+        name: "Part 1",
       },
     ],
   },

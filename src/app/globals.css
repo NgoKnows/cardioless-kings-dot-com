@@ -100,3 +100,7 @@ a {
     color-scheme: dark;
   }
 }
+
+ul, li, ol {
+  all: unset;
+}

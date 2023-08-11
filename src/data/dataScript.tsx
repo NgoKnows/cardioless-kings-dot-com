@@ -234,4 +234,5 @@ const data = elements.map((ele, index) => {
   };
 });
 
+console.log(data, "bro");
 export default data;

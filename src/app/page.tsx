@@ -1,12 +1,9 @@
+"use client";
+
 import Image from "next/image";
-import styles from "./page.module.css";
+import Link from "next/link";
+import styled from "styled-components";
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <div>hello world!</div>
-      </div>
-    </main>
-  );
+  return <main></main>;
 }

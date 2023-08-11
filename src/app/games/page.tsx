@@ -2,45 +2,79 @@
 import Image from "next/image";
 import games, { gamesGroupedBySeason } from "@/data/games";
 import { useState } from "react";
+import styled from "styled-components";
+import Link from "next/link";
 
 const orderedSeasons = Object.keys(gamesGroupedBySeason)
   .map((seasonString) => parseInt(seasonString, 10))
   .sort();
 
+const SeasonSelector = styled.ul`
+  display: flex;
+`;
+
+const SeasonSelectorSeason = styled.li<{ active: boolean }>`
+  & + & {
+    margin-left: 8px;
+  }
+
+  font-weight: ${({ active }) => (active ? "bold" : undefined)};
+`;
+
+const Container = styled.div`
+  padding: 16px 48px;
+`;
+
+const Games = styled.ul``;
+
+const Game = styled.li`
+  display: flex;
+  padding: 12px;
+  border: 1px solid black;
+  flex-direction: column;
+  margin-top: 16px;
+`;
+
 export default function Home() {
   const [currentSeason, setSeason] = useState(1);
+  console.log(gamesGroupedBySeason[currentSeason]);
 
   return (
-    <div>
+    <Container>
       <p>Current season {currentSeason}</p>
-      <ul>
+      <SeasonSelector>
         {orderedSeasons.map((season) => (
-          <li onClick={() => setSeason(season)} key={season}>
+          <SeasonSelectorSeason
+            active={currentSeason === season}
+            onClick={() => setSeason(season)}
+            key={season}
+          >
             {season}
-          </li>
+          </SeasonSelectorSeason>
         ))}
-      </ul>
+      </SeasonSelector>
 
       <div>
-        <ul>
+        <Games>
           {gamesGroupedBySeason[currentSeason].map((game) => {
             return (
-              <li key={game.id}>
-                <div>{game.id}</div>
-                <div>{game.season}</div>
-                <div>{game.teamName}</div>
-                <div>
-                  {game.videoUrls.map((url) => (
-                    <a key={url.href} href={url.href}>
-                      {url.name}
-                    </a>
-                  ))}
-                </div>
-              </li>
+              <Game key={game.id}>
+                <Link href={`/games/${game.id}`}>
+                  <div>{game.season}</div>
+                  <div>{game.teamName}</div>
+                  <div>
+                    {game.videoUrls.map((url) => (
+                      <a key={url.href} href={url.href}>
+                        {url.name}
+                      </a>
+                    ))}
+                  </div>
+                </Link>
+              </Game>
             );
           })}
-        </ul>
+        </Games>
       </div>
-    </div>
+    </Container>
   );
 }
