@@ -26,7 +26,7 @@ export default function Header() {
       <LinkContainer>
         <Link href="/games">games</Link>
         <Link href="/stats">stats</Link>
-        <Link href="/stats">players</Link>
+        <Link href="/players">players</Link>
       </LinkContainer>
     </HeaderComp>
   );
