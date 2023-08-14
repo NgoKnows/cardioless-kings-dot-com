@@ -1,8 +1,10 @@
 "use client";
 
 import data from "@/data/dataScript";
+import { initSqlDB } from "@/utils/sql";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const HeaderComp = styled.header`
@@ -19,7 +21,15 @@ const LinkContainer = styled.div`
 `;
 
 export default function Header() {
-  console.log(data);
+  const [db, setDB] = useState<any>();
+
+  useEffect(() => {
+    initSqlDB().then((db) => {
+      setDB(db);
+      console.log("it worked??", db);
+    });
+  }, []);
+
   return (
     <HeaderComp>
       <Link href="/">Cardioless Kings</Link>
