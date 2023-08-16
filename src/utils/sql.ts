@@ -1,6 +1,8 @@
 import initSqlJs from "sql.js";
 import type { Database } from "sql.js";
 import games from "@/data/games";
+import players from "@/data/players";
+import { gameIdToBoxScore } from "@/data/boxScores/processed";
 
 export const initSqlDB = async () => {
   return initSqlJs({
@@ -40,7 +42,7 @@ export const setUpTables = (db: Database) => {
 `);
 
   db.run(`
-    CREATE TABLE player_boxscore (
+    CREATE TABLE player_box_scores (
     player_id TEXT REFERENCES players(id),
     game_id TEXT REFERENCES games(id),
     pt INTEGER DEFAULT 0,
@@ -61,21 +63,7 @@ export const setUpTables = (db: Database) => {
 };
 
 export const importData = (db: Database) => {
-  // import games
-  console.log(`
-  INSERT INTO games
-  ( id, season, team_name )
-  VALUES
-    ${games.reduce((acc, game, index) => {
-      return (
-        acc +
-        `(${game.id}, ${game.season}, ${game.teamName})` +
-        (index === games.length - 1 ? "" : ", \n")
-      );
-    }, "")};
-  `);
-
-  const foo = db.prepare(`
+  const populateGamesStmt = db.prepare(`
   INSERT INTO games
   ( id, season, team_name )
   VALUES
@@ -84,5 +72,122 @@ export const importData = (db: Database) => {
     }, "")};
   `);
 
-  foo.run(games.flatMap((game) => [game.id, game.season, game.teamName]));
+  populateGamesStmt.run(
+    games.flatMap((game) => [game.id, game.season, game.teamName])
+  );
+
+  const allVideoUrls = games.flatMap((game) =>
+    game.videoUrls.map((link) => ({
+      gameId: game.id,
+      link: link.href,
+      linkName: link.name,
+    }))
+  );
+
+  const populateGameLinksStmt = db.prepare(`
+  INSERT INTO game_links
+  ( game_id, link, link_name )
+  VALUES
+    ${allVideoUrls.reduce((acc, url, index) => {
+      return (
+        acc + `(?, ?, ?)` + (index === allVideoUrls.length - 1 ? "" : ", \n")
+      );
+    }, "")};
+  `);
+
+  populateGameLinksStmt.run(
+    allVideoUrls.flatMap((url) => [url.gameId, url.link, url.linkName])
+  );
+
+  // console.log(
+  //   db.exec(
+  //     //"SELECT * from games join game_links ON games.id=game_links.game_id;"
+  //     `SELECT
+  //     games.*,
+  //     GROUP_CONCAT(game_links.link_name) AS combined_link_names,
+  //     GROUP_CONCAT(game_links.link) AS combined_links
+  // FROM
+  //     games
+  // JOIN
+  //     game_links
+  // ON
+  //     games.id = game_links.game_id
+  // GROUP BY
+  //     games.id;`
+  //   )
+  // );
+
+  const allPlayers = Object.values(players);
+  const populatePlayersStmt = db.prepare(`
+  INSERT INTO players
+  ( id, name, status )
+  VALUES
+    ${allPlayers.reduce((acc, game, index) => {
+      return (
+        acc + `(?, ?, ?)` + (index === allPlayers.length - 1 ? "" : ", \n")
+      );
+    }, "")};
+  `);
+
+  populatePlayersStmt.run(
+    allPlayers.flatMap((player) => [player.id, player.name, player.status])
+  );
+
+  const stats = [
+    "pt",
+    "reb",
+    "ast",
+    "stl",
+    "blk",
+    "fgm",
+    "fga",
+    "ftm",
+    "fta",
+    "tpm",
+    "tpa",
+    "to",
+  ];
+
+  const gameIdToBoxScoreEntries = Object.entries(gameIdToBoxScore);
+
+  gameIdToBoxScoreEntries.forEach(([gameId, boxScore]) => {
+    const populatePlayerBoxScoresStmt = db.prepare(`
+  INSERT INTO player_box_scores
+  (
+    player_id,
+    game_id,
+    pt,
+    reb,
+    ast,
+    stl,
+    blk,
+    fgm,
+    fga,
+    ftm,
+    fta,
+    tpm,
+    tpa,
+    "to"
+  )
+  VALUES
+    ${boxScore.reduce((acc, game, index) => {
+      return (
+        acc +
+        `(?, ?, ${stats.map(() => "?").join(", ")})` +
+        (index === boxScore.length - 1 ? "" : ", \n")
+      );
+    }, "")};
+  `);
+
+    populatePlayerBoxScoresStmt.run(
+      boxScore.flatMap((boxScore) => [
+        boxScore.player,
+        gameId,
+        // @ts-expect-error
+        ...stats.map((statName) => boxScore.stats[statName]),
+      ])
+    );
+  });
+
+  // console.log(db.exec("SELECT * FROM players;"));
 };
