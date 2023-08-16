@@ -1,5 +1,6 @@
 "use client";
 
+import { SqlDBContext } from "@/context/sqlDb";
 import data from "@/data/dataScript";
 import { initSqlDB } from "@/utils/sql";
 import Image from "next/image";
@@ -26,18 +27,19 @@ export default function Header() {
   useEffect(() => {
     initSqlDB().then((db) => {
       setDB(db);
-      console.log("it worked??", db);
     });
   }, []);
 
   return (
-    <HeaderComp>
-      <Link href="/">Cardioless Kings</Link>
-      <LinkContainer>
-        <Link href="/games">games</Link>
-        <Link href="/stats">stats</Link>
-        <Link href="/players">players</Link>
-      </LinkContainer>
-    </HeaderComp>
+    <SqlDBContext.Provider value={db}>
+      <HeaderComp>
+        <Link href="/">Cardioless Kings</Link>
+        <LinkContainer>
+          <Link href="/games">games</Link>
+          <Link href="/stats">stats</Link>
+          <Link href="/players">players</Link>
+        </LinkContainer>
+      </HeaderComp>
+    </SqlDBContext.Provider>
   );
 }
