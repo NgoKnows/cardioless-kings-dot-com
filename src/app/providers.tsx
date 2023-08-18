@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import StyledComponentsRegistry from "./registry";
-import { SqlDBContext } from "@/context/sqlDb";
+import { SqlDBContext } from "@/context/sqlDB";
 import { importData, initSqlDB, setUpTables } from "@/utils/sql";
 import { ThemeProvider } from "styled-components";
 import theme from "@/utils/theme";
@@ -18,6 +18,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       importData(newDB);
     });
   }, []);
+
+  if (!db) {
+    return null;
+  }
 
   return (
     <ThemeProvider theme={theme}>

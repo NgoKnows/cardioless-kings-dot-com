@@ -4,6 +4,8 @@ import games, { gamesGroupedBySeason } from "@/data/games";
 import { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import { useSqlDB, SqlDBContext, convertDataToObjects } from "@/context/sqlDB";
+import { getAllGamesBySeason } from "@/utils/sql";
 
 function getYouTubeThumbnailUrl(youtubeLink: string) {
   const videoId = extractVideoId(youtubeLink);
@@ -43,27 +45,23 @@ const cardColors = [
   "#79A3D9",
 ];
 
-const orderedSeasons = Object.keys(gamesGroupedBySeason)
-  .map((seasonString) => parseInt(seasonString, 10))
-  .sort();
-
 const SeasonSelector = styled.ul`
   display: flex;
 `;
 
-const SeasonSelectorSeason = styled.li<{ active: boolean }>`
+const SeasonSelectorSeason = styled.li<{ $active: boolean }>`
   & + & {
     margin-left: 8px;
   }
 
-  font-weight: ${({ active }) => (active ? "bold" : undefined)};
+  font-weight: ${({ $active }) => ($active ? "bold" : undefined)};
 `;
 
 const Container = styled.div`
   padding: 16px 48px 36px;
 `;
 
-const CardLink = styled(Link)`
+const Card = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -132,17 +130,25 @@ const GameLink = styled.a`
   }
 `;
 
+const seasons = [1, 3, 4, 5, 6, 7, "all"];
+
 export default function Home() {
-  const [currentSeason, setSeason] = useState(1);
+  const [currentSeason, setSeason] = useState<string | number>(7);
+  const db = useSqlDB();
+  const data = getAllGamesBySeason(db, {
+    season: currentSeason === "all" ? null : currentSeason,
+  });
+
+  console.log(data);
   console.log(gamesGroupedBySeason[currentSeason]);
 
   return (
     <Container>
       <p>Current season {currentSeason}</p>
       <SeasonSelector>
-        {orderedSeasons.map((season) => (
+        {seasons.map((season) => (
           <SeasonSelectorSeason
-            active={currentSeason === season}
+            $active={currentSeason === season}
             onClick={() => setSeason(season)}
             key={season}
           >
@@ -153,10 +159,11 @@ export default function Home() {
 
       <div>
         <Games>
-          {gamesGroupedBySeason[currentSeason].map((game, index) => {
+          {data.map((game, index) => {
             return (
-              <Game key={game.id} color={cardColors[currentSeason as any]}>
-                <CardLink href={`/games/${game.id}`}>
+              <Game key={game.id} color={cardColors[game.season]}>
+                <Card>
+                  {/* href={`/games/${game.id}` */}
                   <ThumbnailContainer>
                     <Thumbnail
                       alt="thumbnail"
@@ -169,13 +176,18 @@ export default function Home() {
                     <GameLinks>
                       Video Links:
                       {game.videoUrls.sort().map((url) => (
-                        <GameLink key={url.href} href={url.href}>
+                        <GameLink
+                          key={url.href}
+                          href={url.href}
+                          target="_blank"
+                          rel="noopener"
+                        >
                           {url.name}
                         </GameLink>
                       ))}
                     </GameLinks>
                   </GameInfo>
-                </CardLink>
+                </Card>
               </Game>
             );
           })}

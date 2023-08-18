@@ -198,3 +198,62 @@ export const importData = (db: Database) => {
   //   `)
   // );
 };
+
+export function convertDataToObjects(data: any) {
+  const results = [];
+
+  if (data.length > 0 && data[0].columns && data[0].values) {
+    const columns = data[0].columns;
+
+    for (const values of data[0].values) {
+      const rowObject = {};
+
+      for (let i = 0; i < columns.length; i++) {
+        // @ts-expect-error
+        rowObject[columns[i]] = values[i];
+      }
+
+      results.push(rowObject);
+    }
+  }
+
+  return results;
+}
+
+export const getAllGamesBySeason = (
+  db: Database,
+  { season }: { season: number | null }
+) => {
+  const data = db.exec(`
+  SELECT
+    games.*,
+    GROUP_CONCAT(game_links.link_name) AS combined_link_names,
+    GROUP_CONCAT(game_links.link) AS combined_links
+  FROM
+    games
+  JOIN
+    game_links
+  ON
+    games.id = game_links.game_id
+
+  ${season ? `WHERE games.season = ${season}` : ""}
+
+  GROUP BY
+    games.id
+  ORDER BY
+    games.season DESC;
+`);
+
+  console.log(convertDataToObjects(data));
+
+  return convertDataToObjects(data).map((row: any) => {
+    return {
+      ...row,
+      teamName: row.team_name,
+      videoUrls: row.combined_links.split(",").map((link: any, index: any) => ({
+        href: link,
+        name: row.combined_link_names.split(",")[index],
+      })),
+    };
+  });
+};
