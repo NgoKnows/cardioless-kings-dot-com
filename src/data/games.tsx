@@ -392,7 +392,7 @@ const games = [
   {
     id: 33,
     season: 1,
-    teamName: "Unknown (Raj's Phone)",
+    teamName: "Unknown",
     videoUrls: [
       {
         href: "https://www.youtube.com/watch?v=1nun8ihCdwU",

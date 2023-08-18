@@ -189,12 +189,12 @@ export const importData = (db: Database) => {
     );
   });
 
-  console.log(
-    db.exec(`
-      SELECT players.*, avg(player_box_scores.pt) as ppg
-      FROM players
-      join player_box_scores on player_box_scores.player_id=players.id
-      where players.id = ${players.Alex.id};
-    `)
-  );
+  // console.log(
+  //   db.exec(`
+  //     SELECT players.*, avg(player_box_scores.pt) as ppg
+  //     FROM players
+  //     join player_box_scores on player_box_scores.player_id=players.id
+  //     where players.id = ${players.Alex.id};
+  //   `)
+  // );
 };

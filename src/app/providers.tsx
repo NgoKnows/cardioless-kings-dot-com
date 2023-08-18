@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import StyledComponentsRegistry from "./registry";
 import { SqlDBContext } from "@/context/sqlDb";
 import { importData, initSqlDB, setUpTables } from "@/utils/sql";
+import { ThemeProvider } from "styled-components";
+import theme from "@/utils/theme";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [db, setDB] = useState<any>();
@@ -17,11 +19,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
-  console.log(db);
-
   return (
-    <SqlDBContext.Provider value={db}>
-      <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
-    </SqlDBContext.Provider>
+    <ThemeProvider theme={theme}>
+      <SqlDBContext.Provider value={db}>
+        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+      </SqlDBContext.Provider>
+    </ThemeProvider>
   );
 }

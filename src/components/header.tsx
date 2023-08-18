@@ -8,17 +8,25 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const HeaderComp = styled.header`
-  background-color: palevioletred;
+const HeaderComp = styled.div`
+  background-color: #b2ac88;
   padding: 24px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 8px 12px 4px;
+  color: white;
 `;
 
 const LinkContainer = styled.div`
   display: inline-flex;
-  margin-left: 36px;
+  margin-left: 72px;
   > * + * {
     margin-left: 12px;
   }
+`;
+
+const HomeLink = styled(Link)`
+  text-transform: uppercase;
+  font-size: 24px;
+  letter-spacing: 3px;
 `;
 
 export default function Header() {
@@ -33,7 +41,7 @@ export default function Header() {
   return (
     <SqlDBContext.Provider value={db}>
       <HeaderComp>
-        <Link href="/">Cardioless Kings</Link>
+        <HomeLink href="/">Cardioless Kings</HomeLink>
         <LinkContainer>
           <Link href="/games">games</Link>
           <Link href="/stats">stats</Link>
