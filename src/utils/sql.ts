@@ -257,3 +257,59 @@ export const getAllGamesBySeason = (
     };
   });
 };
+
+export const getAllPlayers = (db: Database) => {
+  const data = db.exec(`
+  SELECT players.*,
+  round(avg(player_box_scores.pt), 1) as ppg,
+  round(avg(player_box_scores.reb), 1) as rpg,
+  round(avg(player_box_scores.ast), 1) as apg
+  FROM players
+  join player_box_scores on player_box_scores.player_id=players.id
+  group by players.id;
+`);
+
+  return convertDataToObjects(data).map((row: any) => {
+    return {
+      ...row,
+    };
+  });
+};
+
+export const getBoxScoreForGame = (
+  db: Database,
+  { gameId }: { gameId: string }
+) => {
+  const data = db.exec(`
+  SELECT player_box_scores.*, players.name
+  FROM player_box_scores
+  JOIN players on player_box_scores.player_id = players.id
+  WHERE game_id = ${gameId};
+`);
+
+  return convertDataToObjects(data).map((row: any) => {
+    return {
+      ...row,
+      fgp: (row.fgm / row.fga || 0).toFixed(2),
+      ftp: (row.ftm / row.fta || 0).toFixed(2),
+    };
+  });
+};
+
+export const getGameDetails = (
+  db: Database,
+  { gameId }: { gameId: string }
+) => {
+  const data = db.exec(`
+  SELECT games.*
+  FROM games
+  WHERE id = ${gameId};
+`);
+
+  return convertDataToObjects(data).map((row: any) => {
+    return {
+      ...row,
+      teamName: row.team_name,
+    };
+  })[0];
+};

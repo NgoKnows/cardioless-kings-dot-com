@@ -21,7 +21,7 @@ const LinkContainer = styled.div`
 const HomeLink = styled(Link)`
   text-transform: uppercase;
   font-size: 24px;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
 `;
 
 export default function Header() {

@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useSqlDB, SqlDBContext, convertDataToObjects } from "@/context/sqlDB";
 import { getAllGamesBySeason } from "@/utils/sql";
+import { useRouter } from "next/navigation";
 
 function getYouTubeThumbnailUrl(youtubeLink: string) {
   const videoId = extractVideoId(youtubeLink);
@@ -45,16 +46,26 @@ const cardColors = [
   "#79A3D9",
 ];
 
+const SeasonSelectorLabel = styled.p`
+  text-transform: uppercase;
+  font-size: 16px;
+`;
+
 const SeasonSelector = styled.ul`
   display: flex;
+  margin-top: 2px;
+  font-size: 21px;
+  gap: 0px 8px;
 `;
 
 const SeasonSelectorSeason = styled.li<{ $active: boolean }>`
-  & + & {
-    margin-left: 8px;
-  }
+  cursor: pointer;
+  padding: 2px 6px;
 
   font-weight: ${({ $active }) => ($active ? "bold" : undefined)};
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 const Container = styled.div`
@@ -65,6 +76,12 @@ const Card = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  transition: opacity 0.15s ease-out;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const Games = styled.ul`
@@ -132,19 +149,19 @@ const GameLink = styled.a`
 
 const seasons = [1, 3, 4, 5, 6, 7, "all"];
 
-export default function Home() {
+export default function GamesPage() {
   const [currentSeason, setSeason] = useState<string | number>(7);
+  const router = useRouter();
   const db = useSqlDB();
   const data = getAllGamesBySeason(db, {
+    // @ts-ignore
     season: currentSeason === "all" ? null : currentSeason,
   });
 
-  console.log(data);
-  console.log(gamesGroupedBySeason[currentSeason]);
-
   return (
     <Container>
-      <p>Current season {currentSeason}</p>
+      <SeasonSelectorLabel>season</SeasonSelectorLabel>
+
       <SeasonSelector>
         {seasons.map((season) => (
           <SeasonSelectorSeason
@@ -162,8 +179,11 @@ export default function Home() {
           {data.map((game, index) => {
             return (
               <Game key={game.id} color={cardColors[game.season]}>
-                <Card>
-                  {/* href={`/games/${game.id}` */}
+                <Card
+                  onClick={() => {
+                    router.push(`/games/${game.id}`);
+                  }}
+                >
                   <ThumbnailContainer>
                     <Thumbnail
                       alt="thumbnail"
@@ -175,16 +195,22 @@ export default function Home() {
                     <Title>Cardioless Kings vs {game.teamName}</Title>
                     <GameLinks>
                       Video Links:
-                      {game.videoUrls.sort().map((url) => (
-                        <GameLink
-                          key={url.href}
-                          href={url.href}
-                          target="_blank"
-                          rel="noopener"
-                        >
-                          {url.name}
-                        </GameLink>
-                      ))}
+                      {game.videoUrls
+                        .sort()
+                        .reverse()
+                        .map((url: any) => (
+                          <GameLink
+                            key={url.href}
+                            href={url.href}
+                            target="_blank"
+                            rel="noopener"
+                            onClick={(ev: any) => {
+                              ev.stopPropagation();
+                            }}
+                          >
+                            {url.name}
+                          </GameLink>
+                        ))}
                     </GameLinks>
                   </GameInfo>
                 </Card>
