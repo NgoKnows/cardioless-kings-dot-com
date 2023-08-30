@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useSqlDB, SqlDBContext, convertDataToObjects } from "@/context/sqlDB";
 import { getAllGamesBySeason } from "@/utils/sql";
 import { useRouter } from "next/navigation";
+import PageHeader from "@/components/page-header";
 
 function getYouTubeThumbnailUrl(youtubeLink: string) {
   const videoId = extractVideoId(youtubeLink);
@@ -46,9 +47,20 @@ const cardColors = [
   "#79A3D9",
 ];
 
+const HeaderSelectorContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+const SeasonSelectorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const SeasonSelectorLabel = styled.p`
   text-transform: uppercase;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 const SeasonSelector = styled.ul`
@@ -160,19 +172,23 @@ export default function GamesPage() {
 
   return (
     <Container>
-      <SeasonSelectorLabel>season</SeasonSelectorLabel>
-
-      <SeasonSelector>
-        {seasons.map((season) => (
-          <SeasonSelectorSeason
-            $active={currentSeason === season}
-            onClick={() => setSeason(season)}
-            key={season}
-          >
-            {season}
-          </SeasonSelectorSeason>
-        ))}
-      </SeasonSelector>
+      <HeaderSelectorContainer>
+        <PageHeader season={currentSeason}>Games</PageHeader>
+        <SeasonSelectorContainer>
+          <SeasonSelectorLabel>Select Season</SeasonSelectorLabel>
+          <SeasonSelector>
+            {seasons.map((season) => (
+              <SeasonSelectorSeason
+                $active={currentSeason === season}
+                onClick={() => setSeason(season)}
+                key={season}
+              >
+                {season}
+              </SeasonSelectorSeason>
+            ))}
+          </SeasonSelector>
+        </SeasonSelectorContainer>
+      </HeaderSelectorContainer>
 
       <div>
         <Games>

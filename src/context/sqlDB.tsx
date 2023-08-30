@@ -2,11 +2,9 @@ import React, { createContext, useContext, ReactNode } from "react";
 import { Database } from "sql.js";
 
 // Define the context shape
-type SqlDBContextType = any;
+// type SqlDBContextType = any;
 
-export const SqlDBContext = createContext<SqlDBContextType | undefined>(
-  undefined
-);
+export const SqlDBContext = createContext<any | undefined>(undefined);
 
 // Custom hook to use the context
 export function useSqlDB(): Database {

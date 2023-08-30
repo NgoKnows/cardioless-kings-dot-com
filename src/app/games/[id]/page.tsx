@@ -29,6 +29,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const db = useSqlDB();
   const [data] = useState(() => getBoxScoreForGame(db, { gameId: params.id }));
   const [game] = useState(() => getGameDetails(db, { gameId: params.id }));
+
   return (
     <Container>
       <Season>Season {game.season}</Season>

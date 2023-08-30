@@ -313,3 +313,92 @@ export const getGameDetails = (
     };
   })[0];
 };
+
+export const statsAndAverageNamesOrdered = [
+  { statName: "pt", averageName: "ppg", averageDisplayName: "Points Per Game" },
+  {
+    statName: "reb",
+    averageName: "rpg",
+    averageDisplayName: "Rebounds Per Game",
+  },
+  {
+    statName: "ast",
+    averageName: "apg",
+    averageDisplayName: "Assists Per Game",
+  },
+  {
+    statName: "stl",
+    averageName: "spg",
+    averageDisplayName: "Steals Per Game",
+  },
+  {
+    statName: "blk",
+    averageName: "bpg",
+    averageDisplayName: "Blocks Per Game",
+  },
+  {
+    statName: "fgm",
+    averageName: "fgmpg",
+    averageDisplayName: "Field Goals Made Per Game",
+  },
+  {
+    statName: "fga",
+    averageName: "fgapg",
+    averageDisplayName: "Field Goals Attempted Per Game",
+  },
+  {
+    statName: "ftm",
+    averageName: "ftmpg",
+    averageDisplayName: "Free Throws Made Per Game",
+  },
+  {
+    statName: "fta",
+    averageName: "ftapg",
+    averageDisplayName: "Free Throws Attempted Per Game",
+  },
+  {
+    statName: "tpm",
+    averageName: "tpmpg",
+    averageDisplayName: "Threes Made Per Game",
+  },
+  {
+    statName: "tpa",
+    averageName: "tpapg",
+    averageDisplayName: "Threes Attempted Per Game",
+  },
+  {
+    statName: "to",
+    averageName: "topg",
+    averageDisplayName: "Turnovers Per Game",
+  },
+];
+
+export const getLeaderInAllStats = (db: Database) => {
+  const getQueryForStat = (statName: string, averageName: string) => {
+    return `
+      SELECT players.*,
+      round(avg(player_box_scores."${statName}"), 1) as ${averageName}
+      FROM players
+      join player_box_scores on player_box_scores.player_id=players.id
+      group by players.id
+      order by ${averageName} desc
+      limit 5;
+  `;
+  };
+
+  const data = statsAndAverageNamesOrdered.reduce(
+    (acc, { statName, averageName }) => {
+      const data = convertDataToObjects(
+        db.exec(getQueryForStat(statName, averageName))
+      );
+
+      return {
+        ...acc,
+        [statName]: data,
+      };
+    },
+    {}
+  );
+
+  return data;
+};
