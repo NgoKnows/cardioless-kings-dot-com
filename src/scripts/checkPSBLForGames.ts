@@ -1,6 +1,28 @@
 const puppeteer = require("puppeteer");
 
+const mockResponse = [
+  {
+    officialOne: "Strother",
+    officialTwo: "Aranza",
+    time: "06:05 pm",
+    gym: "Seattle Central College #1 ",
+    homeTeam: "Switching Back And Forth",
+    awayTeam: "Indy Green Monster (WED)",
+    isHome: false,
+  },
+  {
+    officialOne: "Strother",
+    officialTwo: "Aranza",
+    time: "07:00 pm",
+    gym: "Seattle Central College #1 ",
+    homeTeam: "Roe vs. D. Wade (Wed)",
+    awayTeam: "Indy Green Monster (WED)",
+    isHome: false,
+  },
+];
+
 const checkPSBLForGames = async () => {
+  return mockResponse;
   const teamName = "Still Below The Rim";
 
   // Launch a new browser instance
@@ -52,24 +74,3 @@ const checkPSBLForGames = async () => {
 };
 
 export default checkPSBLForGames;
-
-// [
-//   {
-//     officialOne: 'Strother',
-//     officialTwo: 'Aranza',
-//     time: '06:05 pm',
-//     gym: 'Seattle Central College #1 ',
-//     homeTeam: 'Switching Back And Forth',
-//     awayTeam: 'Indy Green Monster (WED)',
-//     isHome: false
-//   },
-//   {
-//     officialOne: 'Strother',
-//     officialTwo: 'Aranza',
-//     time: '07:00 pm',
-//     gym: 'Seattle Central College #1 ',
-//     homeTeam: 'Roe vs. D. Wade (Wed)',
-//     awayTeam: 'Indy Green Monster (WED)',
-//     isHome: false
-//   }
-// ]

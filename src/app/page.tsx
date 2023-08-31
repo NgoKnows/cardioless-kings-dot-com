@@ -3,6 +3,7 @@
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 
@@ -31,7 +32,7 @@ const Slot = styled.div`
   border-radius: 8px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 8px 12px 4px;
   position: relative;
-  padding: 16px;
+  padding: 24px;
 `;
 
 const SlotTitle = styled.span`
@@ -60,15 +61,13 @@ const NextGameSlot = styled(Slot)`
   background-color: #1c4835;
   color: white;
   margin-left: 24px;
-  height: 400px;
+  height: 350px;
   width: 800px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const MostRecentGameSlot = styled(Slot)``;
-
-const NextGameText = styled.div`
-  font-size: 42px;
-`;
 
 export default function Home() {
   const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
@@ -88,16 +87,121 @@ export default function Home() {
           <SlotTitle>Current Record</SlotTitle>
           <SlotInfo>8-1</SlotInfo>
         </RecordSlot>
-        <NextGameSlot>
-          <NextGameText>
-            Next game is tomorrow at {data[0].time}.
-            <br />
-            We are home, so wear black.
-            <br />
-            Officials are foo and bar
-          </NextGameText>
-        </NextGameSlot>
+        <NextGame data={data} />
       </Container>
     </main>
   );
 }
+
+const NextGameInfo = styled.div`
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const NextGameInfoSection = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const NextGameInfoSectionHeader = styled.div`
+  text-transform: uppercase;
+  border-bottom: 1px solid white;
+  padding-bottom: 4px;
+  font-weight: 300;
+`;
+
+const NextGameInfoSectionValue = styled.span`
+  margin-top: 8px;
+  font-size: 18px;
+`;
+
+const NextGameText = styled.div`
+  font-size: 42px;
+`;
+
+const NextGameSelector = styled.div`
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const NextGameSelectorText = styled.div<{ active: boolean }>`
+  font-weight: ${({ active }) => (active ? 700 : 400)};
+  text-decoration: ${({ active }) => (active ? "underline" : undefined)};
+`;
+
+const NextGame = ({ data }: any) => {
+  const [gameNumber, setGameNumber] = useState<1 | 2>(1);
+  const gameStatus: "noData" | "oneGame" | "doubleHeader" = (() => {
+    if (!data) {
+      return "noData";
+    }
+
+    if (data.length === 2) {
+      return "doubleHeader";
+    }
+
+    return "oneGame";
+  })();
+
+  const currentGameData = gameNumber === 2 ? data[1] : data[0];
+
+  return (
+    <NextGameSlot>
+      <NextGameText>
+        Next game is tomorrow at {currentGameData.time}.
+        <br />
+        We are home, so wear black.
+      </NextGameText>
+      <NextGameInfo>
+        <NextGameInfoSection>
+          <NextGameInfoSectionHeader>Venue</NextGameInfoSectionHeader>
+          <NextGameInfoSectionValue>
+            {currentGameData.gym}
+          </NextGameInfoSectionValue>
+        </NextGameInfoSection>
+
+        <NextGameInfoSection>
+          <NextGameInfoSectionHeader>Opponent</NextGameInfoSectionHeader>
+          <NextGameInfoSectionValue>
+            {currentGameData.isHome
+              ? currentGameData.awayTeam
+              : currentGameData.homeTeam}
+          </NextGameInfoSectionValue>
+        </NextGameInfoSection>
+
+        <NextGameInfoSection>
+          <NextGameInfoSectionHeader>Officials</NextGameInfoSectionHeader>
+          <NextGameInfoSectionValue>
+            {currentGameData.officialOne} &{" "}
+            <NextGameInfoSectionValue>
+              {currentGameData.officialTwo}
+            </NextGameInfoSectionValue>
+          </NextGameInfoSectionValue>
+        </NextGameInfoSection>
+      </NextGameInfo>
+
+      {gameStatus === "doubleHeader" && (
+        <NextGameSelector>
+          <NextGameSelectorText
+            onClick={() => setGameNumber(1)}
+            active={gameNumber === 1}
+          >
+            Game 1
+          </NextGameSelectorText>
+          <span>{"\u2022"}</span>
+          <NextGameSelectorText
+            onClick={() => setGameNumber(2)}
+            active={gameNumber === 2}
+          >
+            Game 2
+          </NextGameSelectorText>
+        </NextGameSelector>
+      )}
+    </NextGameSlot>
+  );
+};
