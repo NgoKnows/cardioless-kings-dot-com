@@ -38,7 +38,7 @@ const PlayerCards = styled.div`
   align-items: center;
 `;
 
-const PlayerCard = styled.div`
+const PlayerCard = styled(Link)`
   height: 700px;
   width: 600px;
   background-color: ${({ color }) => color};
@@ -106,7 +106,11 @@ export default function Players() {
       <PlayerCards>
         {data.map((player, index) => {
           return (
-            <PlayerCard key={player.id} color={cardColors[index]}>
+            <PlayerCard
+              href={`/players/${player.id}`}
+              key={player.id}
+              color={cardColors[index]}
+            >
               <Name>
                 {player.name.split(" ").map((name) => (
                   <>

@@ -57,11 +57,22 @@ const RecordSlot = styled(Slot)`
   flex-direction: column;
 `;
 
+const CurrentSeasonSlot = styled(Slot)`
+  background-color: #b94933;
+  font-size: 48px;
+  color: white;
+  min-width: 350px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+`;
+
 const NextGameSlot = styled(Slot)`
   background-color: #1c4835;
   color: white;
   margin-left: 24px;
-  height: 350px;
+  min-height: 350px;
   width: 800px;
   display: flex;
   flex-direction: column;
@@ -83,10 +94,17 @@ export default function Home() {
   return (
     <main>
       <Container>
-        <RecordSlot>
-          <SlotTitle>Current Record</SlotTitle>
-          <SlotInfo>8-1</SlotInfo>
-        </RecordSlot>
+        <div>
+          <RecordSlot>
+            <SlotTitle>Current Record</SlotTitle>
+            <SlotInfo>5 - 1</SlotInfo>
+          </RecordSlot>
+
+          <CurrentSeasonSlot>
+            <SlotTitle>Current Season</SlotTitle>
+            <SlotInfo>8</SlotInfo>
+          </CurrentSeasonSlot>
+        </div>
         <NextGame data={data} />
       </Container>
     </main>
@@ -122,6 +140,15 @@ const NextGameText = styled.div`
   font-size: 42px;
 `;
 
+const GameDataContainer = styled.div`
+  padding-top: 36px;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 36px; /* Adjust the gap as needed */
+  margin-top: auto;
+  margin-bottom: auto;
+`;
+
 const NextGameSelector = styled.div`
   display: flex;
   gap: 12px;
@@ -148,60 +175,70 @@ const NextGame = ({ data }: any) => {
     return "oneGame";
   })();
 
-  const currentGameData = gameNumber === 2 ? data[1] : data[0];
+  const nextGameText = (() => {
+    if (gameStatus === "noData") {
+      return `Next game hasn't been posted yet. Stay tuned boys.`;
+    }
+
+    if (gameStatus === "oneGame") {
+      return `Next game is tomorrow at ${data[0].time}.`;
+    }
+
+    return (
+      <div>
+        We have a game tomorrow at {data[0].time} & {data[1].time}.
+      </div>
+    );
+  })();
 
   return (
     <NextGameSlot>
-      <NextGameText>
-        Next game is tomorrow at {currentGameData.time}.
-        <br />
-        We are home, so wear black.
-      </NextGameText>
-      <NextGameInfo>
-        <NextGameInfoSection>
-          <NextGameInfoSectionHeader>Venue</NextGameInfoSectionHeader>
-          <NextGameInfoSectionValue>
-            {currentGameData.gym}
-          </NextGameInfoSectionValue>
-        </NextGameInfoSection>
+      <NextGameText>{nextGameText}</NextGameText>
+      {console.log(data)}
 
-        <NextGameInfoSection>
-          <NextGameInfoSectionHeader>Opponent</NextGameInfoSectionHeader>
-          <NextGameInfoSectionValue>
-            {currentGameData.isHome
-              ? currentGameData.awayTeam
-              : currentGameData.homeTeam}
-          </NextGameInfoSectionValue>
-        </NextGameInfoSection>
-
-        <NextGameInfoSection>
-          <NextGameInfoSectionHeader>Officials</NextGameInfoSectionHeader>
-          <NextGameInfoSectionValue>
-            {currentGameData.officialOne} &{" "}
-            <NextGameInfoSectionValue>
-              {currentGameData.officialTwo}
-            </NextGameInfoSectionValue>
-          </NextGameInfoSectionValue>
-        </NextGameInfoSection>
-      </NextGameInfo>
-
-      {gameStatus === "doubleHeader" && (
-        <NextGameSelector>
-          <NextGameSelectorText
-            onClick={() => setGameNumber(1)}
-            active={gameNumber === 1}
-          >
-            Game 1
-          </NextGameSelectorText>
-          <span>{"\u2022"}</span>
-          <NextGameSelectorText
-            onClick={() => setGameNumber(2)}
-            active={gameNumber === 2}
-          >
-            Game 2
-          </NextGameSelectorText>
-        </NextGameSelector>
-      )}
+      <GameDataContainer>
+        {data.map((d, index) => {
+          return <GameData key={index} currentGameData={d} />;
+        })}
+      </GameDataContainer>
     </NextGameSlot>
+  );
+};
+
+const GameData = ({ currentGameData }: any) => {
+  return (
+    <>
+      <NextGameInfoSection>
+        <NextGameInfoSectionHeader>Time</NextGameInfoSectionHeader>
+        <NextGameInfoSectionValue>
+          {currentGameData.time}
+        </NextGameInfoSectionValue>
+      </NextGameInfoSection>
+      <NextGameInfoSection>
+        <NextGameInfoSectionHeader>Venue</NextGameInfoSectionHeader>
+        <NextGameInfoSectionValue>
+          {currentGameData.gym}
+        </NextGameInfoSectionValue>
+      </NextGameInfoSection>
+
+      <NextGameInfoSection>
+        <NextGameInfoSectionHeader>Opponent</NextGameInfoSectionHeader>
+        <NextGameInfoSectionValue>
+          {currentGameData.isHome
+            ? currentGameData.awayTeam
+            : currentGameData.homeTeam}
+        </NextGameInfoSectionValue>
+      </NextGameInfoSection>
+
+      <NextGameInfoSection>
+        <NextGameInfoSectionHeader>Officials</NextGameInfoSectionHeader>
+        <NextGameInfoSectionValue>
+          {currentGameData.officialOne} &{" "}
+          <NextGameInfoSectionValue>
+            {currentGameData.officialTwo}
+          </NextGameInfoSectionValue>
+        </NextGameInfoSectionValue>
+      </NextGameInfoSection>
+    </>
   );
 };

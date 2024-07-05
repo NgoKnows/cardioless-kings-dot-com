@@ -81,7 +81,7 @@ const SeasonSelectorSeason = styled.li<{ $active: boolean }>`
 `;
 
 const Container = styled.div`
-  padding: 16px 48px 36px;
+  padding: 24px 48px 36px;
 `;
 
 const Card = styled.div`
